@@ -13,10 +13,12 @@ public class HealthController : MonoBehaviour {
 	private float currentHealth;
 	private float currentScale;
 
+	private float initialScale;
+
 	private Transform transformer;
 	// Use this for initialization
 	void Start () {
-		currentScale = this.transform.localScale.y;
+		initialScale = currentScale = this.transform.localScale.y;
 		currentHealth = initialHealth;
 
 		transformer = GetComponent<Transform>();
@@ -27,14 +29,14 @@ public class HealthController : MonoBehaviour {
 		if(currentHealth > 0)
 		{
 			currentHealth = currentHealth - lossRate*Time.deltaTime;
-			currentScale = currentHealth/maxHealth;
+			currentScale = initialScale * (currentHealth/maxHealth);
 		}
 		else
 		{
 			currentHealth = currentScale = 0;
 		}
 
-		transformer.localScale = new Vector2(1,this.currentScale);
+		transformer.localScale = new Vector2(this.transform.localScale.x,this.currentScale);
 	}
 
 }
